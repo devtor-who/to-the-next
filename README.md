@@ -1,6 +1,30 @@
-# to-the-next
+# to-the-next / AWS-EC2
 
 nextjs 기반의 프로젝트 템플릿
+Aws ec2 인스턴스에 배포하기위한 ci/cd가 구성되어있습니다.
+
+## GitHub Secrets 설정
+
+GitHub 리포지토리의 Settings > Secrets에서 필요한 시크릿을 설정합니다:
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_REGION
+- AWS_USER
+- EC2_SSH_KEY
+- EC2_INSTANCE
+  ...다른 필요한 환경 변수들
+
+---
+
+아래는 다양한 AMI에 대한 기본 사용자 이름 목록입니다:
+
+- Amazon Linux 2: ec2-user
+- Ubuntu: ubuntu
+- Debian: admin
+- CentOS: centos
+- RHEL: ec2-user 또는 root
+- Fedora: fedora
 
 ## 구성
 

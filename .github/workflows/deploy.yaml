@@ -1,0 +1,47 @@
+name: Deploy Next.js to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Set environment variables
+        run: |
+          # 환경 변수들 이와 같이 설정
+          echo "ENV_VAR=${{ secrets.ENV_VAR }}" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Next.js project
+        run: pnpm build
+
+      - name: Zip the build files
+        run: zip -r build.zip .next public package.json
+
+      - name: Deploy to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} build.zip ${{ secrets.AWS_USER }}@${{ secrets.EC2_INSTANCE }}:/home/${{ secrets.AWS_USER }}/
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.AWS_USER }}@${{ secrets.EC2_INSTANCE }} "
+            unzip -o /home/${{ secrets.AWS_USER }}/build.zip -d /home/${{ secrets.AWS_USER }}/nextjs-app &&
+            cd /home/${{ secrets.AWS_USER }}/nextjs-app &&
+            # 환경 변수들 이와 같이 설정
+            echo "ENV_VAR=${{ secrets.ENV_VAR }}" >> $GITHUB_ENV
+            pnpm install --production &&
+            pm2 restart all
+          "
