@@ -5,15 +5,26 @@ nextjs 기반의 프로젝트 템플릿
 template을 추가하려면 아래와 같이 진행해주세요.
 
 ```
-git remote add template https://github.com/devtor-who/to-the-next.git
+# template repository 가져오기
+git init
+git remote add upstream https://github.com/devtor-who/to-the-next.git
+git fetch upstream
+
+# 기본 템플릿
+git switch main
 
 # ec2 template 사용하기
-git fetch --all
 git merge template/aws-ec2 --allow-unrelated-histories
 
 # cloudflare template 사용하기
-git fetch --all
 git merge template/cloudflare --allow-unrelated-histories
+
+# 내 원격 저장소에 연결하기
+git remote add origin <GITHUB_REPOSITORY>
+git push origin main
+
+# upstream 삭제하기
+git remote rm upstream
 ```
 
 ## 구성
