@@ -40,3 +40,6 @@ next-env.d.ts
 # prisma ( sqlite를 사용하는 경우 )
 *.db
 *.db*
+
+# cloudflare
+wrangler.toml
