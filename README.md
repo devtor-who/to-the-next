@@ -14,10 +14,10 @@ git fetch upstream
 git switch main
 
 # ec2 template 사용하기
-git merge template/aws-ec2 --allow-unrelated-histories
+git merge upstream/template/aws-ec2 --allow-unrelated-histories
 
 # cloudflare template 사용하기
-git merge template/cloudflare --allow-unrelated-histories
+git merge upstream/template/cloudflare --allow-unrelated-histories
 
 # 내 원격 저장소에 연결하기
 git remote add origin <GITHUB_REPOSITORY>
