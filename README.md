@@ -1,41 +1,32 @@
 # to-the-next
+
 nextjs 기반의 프로젝트 템플릿
 
----
+## 구성
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### [패키지 매니저 : pnpm](https://pnpm.io/ko/)
 
-## Getting Started
+### [DB 연결 도구 : Prisma](https://www.prisma.io/)
 
-First, run the development server:
+```
+# db에 정의된 schema 가져오기
+pnpx prisma db pull
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# schema.prisma에 정의된 모델로 prisma provider 생성
+pnpx prisma generate
+
+# db 마이그레이션 하기
+pnpx prisma migrate dev --name init
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### [Component Library : shadcn/ui](https://ui.shadcn.com/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### [사용자 인증 도구: Auth.js](https://authjs.dev/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+아래 명령어로 토큰 관리 secret을 자동생성하여 env로 관리하세요.
 
-## Learn More
+```
+pnpx auth secret
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+세션관리를 prisma adaptor를 활용하게 설정되어있습니다.
